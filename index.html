@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Thank You</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Redirect after 5 seconds -->
-  <meta http-equiv="refresh" content="5;url=https://www.ipc.gov.in/PvPI/adr.html">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Patient Safety Message</title>
 
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap" rel="stylesheet">
@@ -22,27 +19,101 @@
       align-items: center;
       height: 100vh;
       text-align: center;
+      overflow: hidden;
     }
 
-    h1 {
+    .message, .details {
+      position: absolute;
+      max-width: 90%;
       color: #2e7d32;
-      font-size: 2em;
-      text-transform: uppercase;
+      font-size: 1.6em;
       opacity: 0;
-      animation: fadeIn 2s ease-in-out forwards;
+      transition: opacity 1s ease-in-out;
+      text-transform: uppercase;
     }
 
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
+    .message.visible,
+    .details.visible {
+      opacity: 1;
+    }
+
+    .details {
+      font-size: 1.2em;
+      text-transform: none;
+      line-height: 1.6;
+      white-space: pre-line;
+      color: #2e7d32;
+    }
+
+    .line {
+      opacity: 0;
+      transition: opacity 0.6s ease-in-out;
+    }
+
+    .line.visible {
+      opacity: 1;
+    }
+
+    /* Highlighted headings in second message */
+    .highlight {
+      font-size: 1.3em;
+      color: #1565c0;
+      font-weight: bold;
     }
   </style>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const message = document.querySelector('.message');
+      const details = document.querySelector('.details');
+      const lines = document.querySelectorAll('.line');
+
+      // Step 1: Show first message
+      setTimeout(() => {
+        message.classList.add('visible');
+      }, 100);
+
+      // Step 2: Fade out first message after 3.5s
+      setTimeout(() => {
+        message.classList.remove('visible');
+      }, 3600);
+
+      // Step 3: Show second message
+      setTimeout(() => {
+        details.classList.add('visible');
+
+        // Reveal each line with delay
+        lines.forEach((line, index) => {
+          setTimeout(() => {
+            line.classList.add('visible');
+          }, index * 600);
+        });
+
+      }, 4200);
+
+      // Step 4: Redirect after 7.5 seconds of showing second message
+      setTimeout(() => {
+        window.location.href = "https://www.ipc.gov.in/PvPI/adr.html";
+      }, 11700); // 4.2s initial delay + 7.5s for second message
+    });
+  </script>
 </head>
 <body>
 
-  <h1>YOUR VIGILANCE SAVES LIVES. 
-      THANK YOU FOR CONTRIBUTING TO PATIENT SAFETY.</h1>
+  <div class="message">
+    Your vigilance saves lives. Thank you for contributing to patient safety.
+  </div>
+
+  <div class="details">
+    <div class="line highlight">ADR Monitoring Centre – AIIMS Mangalagiri</div>
+    <div class="line highlight">Location:</div>
+    <div class="line">Room No. 150, 1st Floor, OPD Building, AIIMS Mangalagiri</div>
+    <div class="line highlight">Pharmacovigilance Associate:</div>
+    <div class="line">Dr. S. Pavani</div>
+    <div class="line highlight">Contact Details:</div>
+    <div class="line">Mobile: +91 6281147199</div>
+    <div class="line">Email: amc@aiimsmangalagiri.edu.in</div>
+  </div>
 
 </body>
 </html>
